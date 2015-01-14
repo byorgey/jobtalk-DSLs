@@ -164,6 +164,52 @@
   \end{center}
 \end{xframe}
 
+%% Some criteria for evaluating potential solutions.
+%% XXX todo: center text WRT images!
+
+\begin{xframe}{Criteria}
+  \begin{center}
+    \begin{tabular}{cl}
+      \begin{diagram}[width=25,height=25]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "power") criteria # frame 0.5
+      \end{diagram}
+      & Power \\
+      \begin{diagram}[width=25,height=25]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "flexibility") criteria # frame 0.5
+      \end{diagram}
+      & Flexibility \\
+      \begin{diagram}[width=25,height=25]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "learning") criteria # frame 0.5
+      \end{diagram}
+      & Learning Curve \\
+      \begin{diagram}[width=25,height=25]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "repetition") criteria # frame 0.5
+      \end{diagram}
+      & Repetition \\
+      \begin{diagram}[width=25,height=25]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "programmability") criteria # frame 0.5
+      \end{diagram}
+      & Programmability \\
+      \begin{diagram}[width=25,height=25]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "modification") criteria # frame 0.5
+      \end{diagram}
+      & Modifiability
+    \end{tabular}
+  \end{center}
+\end{xframe}
+
 %% There are some well-known software *tools* for making
 %% images/diagrams like this.
 
