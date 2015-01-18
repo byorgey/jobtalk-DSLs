@@ -6,6 +6,7 @@
 
 \usepackage{brent}
 \usepackage[backend=cairo,outputdir=diagrams]{diagrams-latex}
+\usepackage[export]{adjustbox}
 \graphicspath{{images/}}
 \usepackage{ulem}
 
@@ -169,7 +170,7 @@
 
 \begin{xframe}{Criteria}
   \begin{center}
-    \begin{tabular}{cl}
+    \begin{tabular}{m{1cm} l}
       \begin{diagram}[width=25,height=25]
         import Icons
         import Control.Lens (ix, foldOf)
@@ -188,51 +189,138 @@
         dia = foldOf (ix "learning") criteria # frame 0.5
       \end{diagram}
       & Learning Curve \\
-      \begin{diagram}[width=25,height=25]
-        import Icons
-        import Control.Lens (ix, foldOf)
-        dia = foldOf (ix "repetition") criteria # frame 0.5
-      \end{diagram}
-      & Repetition \\
+      % \begin{diagram}[width=25,height=25]    %%% Repetition falls under "programmability"
+      %   import Icons
+      %   import Control.Lens (ix, foldOf)
+      %   dia = foldOf (ix "repetition") criteria # frame 0.5
+      % \end{diagram}
+      % & Repetition \\
       \begin{diagram}[width=25,height=25]
         import Icons
         import Control.Lens (ix, foldOf)
         dia = foldOf (ix "programmability") criteria # frame 0.5
       \end{diagram}
       & Programmability \\
-      \begin{diagram}[width=25,height=25]
-        import Icons
-        import Control.Lens (ix, foldOf)
-        dia = foldOf (ix "modification") criteria # frame 0.5
-      \end{diagram}
-      & Modifiability
+      % \begin{diagram}[width=25,height=25]  %%% Modifiability falls under "flexibility"
+      %   import Icons
+      %   import Control.Lens (ix, foldOf)
+      %   dia = foldOf (ix "modification") criteria # frame 0.5
+      % \end{diagram}
+      % & Modifiability
     \end{tabular}
   \end{center}
+\end{xframe}
+
+\begin{xframe}{Power}
+  \begin{center}
+    \begin{tabular}{m{1.5cm} l}
+      \begin{diagram}[width=40,height=40]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "power") criteria # frame 0.5
+      \end{diagram}
+      & ability to do complex things
+    \end{tabular} \bigskip
+
+    \includegraphics[width=2in]{Excel-barchart}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Flexibility}
+  \begin{center}
+    \begin{tabular}{m{1.5cm} l}
+      \begin{diagram}[width=40,height=40]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "flexibility") criteria # frame 0.5
+      \end{diagram}
+      & ability to tweak and modify
+    \end{tabular} \bigskip
+
+    % XXX TODO need image here to illustrate "flexibility"
+    %\includegraphics[width=2in]{Excel-barchart}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Learning curve}
+  \begin{center}
+    \begin{tabular}{m{1.5cm} l}
+      \begin{diagram}[width=40,height=40]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "learning") criteria # frame 0.5
+      \end{diagram}
+      & how hard is it to learn?
+    \end{tabular} \bigskip
+
+    % XXX TODO need image to illustrate "learning curve"
+  \end{center}
+\end{xframe}
+
+% \begin{xframe}{Repetition}
+%   \begin{center}
+%     \begin{tabular}{m{1.5cm} l}
+%       \begin{diagram}[width=40,height=40]
+%         import Icons
+%         import Control.Lens (ix, foldOf)
+%         dia = foldOf (ix "repetition") criteria # frame 0.5
+%       \end{diagram}
+%       & repetition, tedious or quick?
+%     \end{tabular} \bigskip
+
+%     % XXX TODO need image to illustrate "repetition"
+%   \end{center}
+% \end{xframe}
+
+\begin{xframe}{Programmability}
+  \begin{center}
+    \begin{tabular}{m{1.5cm} l}
+      \begin{diagram}[width=40,height=40]
+        import Icons
+        import Control.Lens (ix, foldOf)
+        dia = foldOf (ix "programmability") criteria # frame 0.5
+      \end{diagram}
+      & do tedious things easily
+    \end{tabular} \bigskip
+
+    \begin{diagram}[height=100]
+      import Hypothetical
+
+      dia = perms4
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Paradigms}
+  \begin{itemize}
+  \item Tools
+  \item General-purpose languages
+  \item Domain-specific languages
+  \end{itemize}
 \end{xframe}
 
 %% There are some well-known software *tools* for making
 %% images/diagrams like this.
 
 \begin{xframe}{Tools}
+  \begin{center}
   \includegraphics[width=1in]{illustrator_logo} \hfill
   \includegraphics[width=1in]{inkscape_logo} \hfill
   \includegraphics[width=1in]{photoshop_logo} \hfill
-  \includegraphics[width=1in]{GIMP_logo}
+  \includegraphics[width=1in]{GIMP_logo} \bigskip
 
-  \begin{minipage}[t]{2in}
-  \begin{itemize}
-  \item<2-> Powerful
-  \item<3-> Shallow learning curve
-  \end{itemize}
-  \end{minipage} \hfill
-  \begin{minipage}[t]{2in}
-  \begin{itemize}
-  \item<4-> Inflexible
-  \item<5-> Tedious
-  \item<6-> No computation
-  \item<7-> Hard to make \emph{logical} modifications
-  \end{itemize}
-  \end{minipage}
+  \onslide<2->
+  \begin{diagram}[width=250]
+    import Icons
+    dia = drawTable
+      [ [power           , happy ]
+      , [flexibility     , meh   ]
+      , [learning        , happy ]
+      , [programmability , sad   ]
+      ]
+      # frame 0.5
+  \end{diagram}
+  \end{center}
 \end{xframe}
 
 %% Could write *programs* to generate drawings.  But using
@@ -240,28 +328,70 @@
 %% time on tedious, repetitive boilerplate that has nothing to do with
 %% drawing in particular.
 
-\begin{xframe}{Languages}
-  XXX
+\begin{xframe}{General-Purpose Languages}
+  \begin{center}
+    XXX icons for Java, C++, etc. \bigskip
+
+    \onslide<2->
+    \begin{diagram}[width=250]
+      import Icons
+      dia = drawTable
+        [ [power           , sad   ]
+        , [flexibility     , happy ]
+        , [learning        , sad   ]
+        , [programmability , happy ]
+        ]
+        # frame 0.5
+    \end{diagram}
+  \end{center}
 \end{xframe}
 
 %% Better to use *domain-specific* languages.
 
-\begin{xframe}
-  XXX logos for languages: Postscript, Metapost, Asymptote
+% List of downsides: these are all pretty terrible languages!  Can't
+% easily combine with computation.  e.g. computing all permutations in
+% order to draw them.
 
-  List of downsides: these are all pretty terrible languages!  Can't
-  easily combine with computation.  e.g. computing all permutations in
-  order to draw them.
+\begin{xframe}{Domain-specific languages (DSLs)}
+  \begin{center}
+    XXX logos for languages: Postscript, Metapost, Asymptote \bigskip
+
+    \onslide<2->
+    \begin{diagram}[width=250]
+      import Icons
+      dia = drawTable
+        [ [power           , happy ]
+        , [flexibility     , happy ]
+        , [learning        , meh   ]
+        , [programmability , meh   ]
+        ]
+        # frame 0.5
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Embedded DSLs}
+  \begin{center}
+    XXX Diagrams logo \bigskip
+
+    \onslide<2->
+    \begin{diagram}[width=250]
+      import Icons
+      dia = drawTable
+        [ [power           , happy ]
+        , [flexibility     , happy ]
+        , [learning        , meh   ]
+        , [programmability , happy ]
+        ]
+        # frame 0.5
+    \end{diagram}
+  \end{center}
 \end{xframe}
 
 \begin{xframe}{}
   \begin{center}
     \Huge{Demo!}
   \end{center}
-\end{xframe}
-
-\begin{xframe}{Domain-specific languages}
-  foo
 \end{xframe}
 
 \def\sectionimg{tree.jpg}
@@ -569,11 +699,34 @@ square :: (TrailLike t, Transformable t, V t ~ R2)
   \end{center}
 \end{xframe}
 
+\begin{xframe}
+  XXX add mentions of monoid pearl, 2-categories for animation
+\end{xframe}
+
 \section{Denotation and compositionality}
 \label{sec:denotation}
+
+%% TODO: What should go in this section?  Anything?  Think I need to
+%% step back a bit again and brainstorm.
 
 \section{GUIs as programming}
 \label{sec:GUIs}
 
+%% Can we have something with happy faces across the board?
+
+\begin{xframe}{The holy grail?}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import Icons
+      dia = drawTable
+        [ [power           , happy ]
+        , [flexibility     , happy ]
+        , [learning        , happy ]
+        , [programmability , happy ]
+        ]
+        # frame 0.5
+    \end{diagram}
+  \end{center}
+\end{xframe}
 
 \end{document}

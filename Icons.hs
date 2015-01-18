@@ -3,6 +3,7 @@
 module Icons where
 
 import           Control.Arrow                  (second)
+import           Data.List                      (transpose)
 import           Data.List.Split
 import qualified Data.Map                       as M
 import           Diagrams.Backend.Cairo.CmdLine
@@ -28,6 +29,7 @@ flexibility :: Diagram B R2
 flexibility = strokeTrail . closeTrail $ catenary 2 <> vrule 0.1 <> catenary 1.8 # reverseTrail
 
 catenary :: Double -> Trail R2
+catenary 0 = hrule 2
 catenary a = cubicSpline False [x ^& (0.5 * a * (exp (x/a) + exp (-x/a))) | x <- [-1, -0.9 .. 1]]
 
 learning :: Diagram B R2
@@ -76,10 +78,11 @@ face mouthDir color
 
 happy, sad :: Diagram B R2
 happy = face 1 green
-sad = face (-1) red
+meh   = face 0 orange
+sad   = face (-1) red
 
 drawTable :: [[Diagram B R2]] -> Diagram B R2
-drawTable = vcat' (with & sep .~ 0.5) . map (hcat' (with & sep .~ 1)) . (map . map) (centerXY . sized (Width 1))
+drawTable = vcat' (with & sep .~ 0.5) . map (hcat' (with & sep .~ 1)) . (map . map) (centerXY . sized (Width 1)) . transpose . lc blue . fc blue
 
 criteria
   = M.fromList $
