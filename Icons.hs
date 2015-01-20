@@ -94,7 +94,18 @@ criteria
     , ("modification", modification)
     ] # (map . second) (fc blue . lc blue)
 
+allCriteria :: Diagram B R2
 allCriteria = hcat' (with & sep .~ 0.5) . map (centerXY . sized (Width 1)) $ M.elems criteria
+
+criteriaTable :: Diagram B R2
+criteriaTable =
+  drawTable
+  [ [power           ]
+  , [flexibility     ]
+  , [learning        ]
+  , [programmability ]
+  ]
+      # frame 0.5
 
 testDia = -- hcat' (with & sep .~ 0.5) . map (centerXY . sized (Width 1)) $
          -- [power, flexibility, learning, repetition, programmability, modification]
