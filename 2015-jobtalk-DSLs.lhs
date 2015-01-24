@@ -15,8 +15,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\theschool}{Williams College}
-\newcommand{\thedate}{January 8, 2015}
+\newcommand{\theschool}{College University}
+\newcommand{\thedate}{Februvember 43, 19823}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,7 +53,7 @@
       \frametitle{}
 
       \begin{center}
-        \includegraphics[width=1in]{\sectionimg}
+        \includegraphics[width=2in]{\sectionimg}
         \bigskip
 
         {\Huge \insertsectionhead}
@@ -127,8 +127,7 @@
   \end{center}
 \end{xframe}
 
-%% XXX better image
-\def\sectionimg{tree.jpg}
+\def\sectionimg{sandwich-too-full.jpg}
 
 \section{Problems with paradigms}
 \label{sec:problems}
@@ -634,6 +633,14 @@ cat foo.txt | grep 'walrus' | sort | uniq
 \end{xframe}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% This is a matter of opinion: the best, most elegant and intuitive
+%% DSLs are based on sound mathematical theory.
+%%
+%% Examples: 
+%%
+%% Diagrams: theory of monoids.  Also monoid actions.  Affine spaces.
+%% Animations based on 2-categories.
 
 \begin{xframe}{Mathematically based}
   %% XXX reword this title?
