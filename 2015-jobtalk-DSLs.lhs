@@ -122,8 +122,44 @@
 
 \begin{xframe}{My research}
   \begin{center}
-    Two images here. One to represent combinatorics stuff (some
-    species diagrams), other to represent DSLs, diagrams etc.
+    %% XXX TODO center these vertically.  Better choice than
+    %% mountains?  Something with trees?
+    \includegraphics[width=2.5in]{mountains} \hfill 
+    \begin{diagram}[width=100]
+import Data.Maybe
+
+import Data.Tree
+import Diagrams.TwoD.Layout.Tree hiding (leaf)
+
+c = ("circle 5", circle 5)
+trans = ("translateX 3", singl (translateX 3))
+rd  = ("fc red", singl (fc red))
+bl = ("fc blue", singl (fc blue))
+top = ("atop", mconcat)
+
+singl f = mconcat . map f
+
+mkNode (t,d) = text t # scale 2 <> d # opacity 0.2 <> roundedRect 18 12 1 # fc white
+
+leaf x = (snd x, Node (mkNode x) [])
+node (t,f) ys = (d, Node (mkNode (t, d)) ts)
+  where
+    (ds, ts) = unzip ys
+    d = f ds
+
+t = snd $ node top [node rd [leaf c], node trans [node bl [leaf c]]]
+
+d = renderTree id (~~)
+      (symmLayout' (with & slWidth  .~ fromMaybe (0,0) . extentX
+                         & slHeight .~ fromMaybe (0,0) . extentY
+                         & slHSep   .~ 3
+                         & slVSep   .~ 3
+                   )
+         t
+      )
+
+dia = d # lw thin # frame 0.5
+    \end{diagram}
   \end{center}
 \end{xframe}
 
