@@ -124,7 +124,9 @@
   \begin{center}
     %% XXX TODO center these vertically.  Better choice than
     %% mountains?  Something with trees?
-    \includegraphics[width=2.5in]{mountains} \hfill 
+  \begin{tabular}{m{2.5in} m{2in}}
+    \centering Combinatorics and data types & Domain-specific languages \\
+    \includegraphics[width=2.5in]{mountains} &
     \begin{diagram}[width=100]
 import Data.Maybe
 
@@ -160,6 +162,9 @@ d = renderTree id (~~)
 
 dia = d # lw thin # frame 0.5
     \end{diagram}
+  \end{tabular}
+
+  Functional programming, types, math
   \end{center}
 \end{xframe}
 
@@ -660,12 +665,21 @@ cat foo.txt | grep 'walrus' | sort | uniq
 \end{center}
 \end{xframe}
 
-\begin{xframe}{}
-  XXX example of non-compositionality using imperative drawing
-\end{xframe}
+\begin{xframe}{Examples of compositionality}
+  \begin{center}
+    \begin{diagram}[width=100]
+      dia = mconcat
+        [ circle 5 # translateX 3 # fc blue
+        , circle 5                # fc red
+        ]
+        # frame 0.5
+    \end{diagram}
 
-\begin{xframe}{}
-  XXX show compositional diagrams again
+    \begin{spec}
+      (circle 5 # translateX 3 # fc blue) <>
+      (circle 5 # fc red)
+    \end{spec}
+  \end{center}
 \end{xframe}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -720,7 +734,15 @@ cat foo.txt | grep 'walrus' | sort | uniq
 \end{xframe}
 
 \begin{xframe}{}
-  XXX add mentions of monoid pearl, affine space, 2-categories for animation
+    \includegraphics[width=2.5in]{monoid-pearl-page1}
+\end{xframe}
+
+\begin{xframe}{}
+    XXX mention affine spaces, paths & trails, etc. ?
+\end{xframe}
+
+\begin{xframe}{}
+   XXX mention 2-categories for animation ?
 \end{xframe}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
