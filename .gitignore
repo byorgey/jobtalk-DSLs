@@ -29,3 +29,5 @@ diagrams/*
 *.ptb
 Shake
 *.sty
+GUI
+GUITest
