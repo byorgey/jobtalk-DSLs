@@ -168,6 +168,10 @@ dia = d # lw thin # frame 0.5
   \end{center}
 \end{xframe}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \def\sectionimg{sandwich-too-full.jpg}
 
 \section{Problems with paradigms}
@@ -497,6 +501,10 @@ dia = d # lw thin # frame 0.5
   \end{center}
 \end{xframe}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% XXX better image
 \def\sectionimg{tree.jpg}
 
@@ -752,8 +760,14 @@ cat foo.txt | grep 'walrus' | sort | uniq
 \end{xframe}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{GUIs as programming}
+%% Use mock-up of DSL here
+\def\sectionimg{tree.jpg}
+
+\section{GUIs as DSLs}
 \label{sec:GUIs}
 
 %% Can we have something with happy faces across the board?
