@@ -149,7 +149,7 @@ node (t,f) ys = (d, Node (mkNode (t, d)) ts)
     (ds, ts) = unzip ys
     d = f ds
 
-t = snd $ node top [node rd [leaf c], node trans [node bl [leaf c]]]
+t = snd $ node top [node rd [leaf c], node trans [node bl [leaf c]]]  -- $
 
 d = renderTree id (~~)
       (symmLayout' (with & slWidth  .~ fromMaybe (0,0) . extentX
@@ -742,11 +742,13 @@ cat foo.txt | grep 'walrus' | sort | uniq
 \end{xframe}
 
 \begin{xframe}{}
+  \begin{center}
     \includegraphics[width=2.5in]{monoid-pearl-page1}
+  \end{center}
 \end{xframe}
 
 \begin{xframe}{}
-    XXX mention affine spaces, paths & trails, etc. ?
+    XXX mention affine spaces, paths and trails, etc. ?
 \end{xframe}
 
 \begin{xframe}{}
