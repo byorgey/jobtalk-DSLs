@@ -103,7 +103,7 @@
 
 \renewcommand{\emph}{\textbf}
 
-\title{Building domain-specific languages and tools}
+\title{Designing domain-specific languages and tools}
 \date{\theschool \\ \thedate}
 \author{Brent Yorgey}
 \titlegraphic{}  % \includegraphics[width=2in]{foo}
@@ -111,6 +111,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
+
+% abstract:
+%
+% Given a particular problem domain, there may be many ways to solve
+% problems in the domain using a computer. For example, one might use
+% a software tool specifically designed for solving problems in the
+% domain; one might write a program in a general-purpose programming
+% language such as Scheme or Java; or one might use a special-purpose,
+% domain-specific programming language.  I will discuss some of the
+% tradeoffs involved in this choice, particularly focusing on the use
+% of domain-specific languages _embedded_ within a general-purpose
+% one.  As a particular example I will demonstrate the use of
+% _diagrams_, a high-level domain-specific language for creating
+% vector graphics, embedded within the strongly typed functional
+% programming language Haskell.
+
+% In the second part of the talk, I will lay out a vision for
+% domain-specific tools designed with tightly integrated languages,
+% that make it possible to seamlessly and incrementally move back and
+% forth between user interface and code.
 
 \begin{xframe}{}
    \titlepage
