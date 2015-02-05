@@ -142,12 +142,54 @@
 
 \begin{xframe}{My research}
   \begin{center}
-    %% XXX TODO center these vertically.  Better choice than
-    %% mountains?  Something with trees?
-  \begin{tabular}{m{2.5in} m{2in}}
-    \centering Combinatorics and data types & Domain-specific languages \\
-    \includegraphics[width=2.5in]{mountains} &
-    \begin{diagram}[width=100]
+  \begin{tabular}{m{2in} m{2in}}
+    \centering Combinatorics \linebreak and data types &
+    \begin{center} Domain-specific \linebreak languages \end{center}
+    \\
+    \begin{center}
+      \begin{diagram}[height=75]
+import Diagrams.TwoD.Layout.Tree
+import Data.Tree
+
+t = nd
+    [ nd
+      [ nd $                    -- $
+          leaves [B, B]
+      , lf B
+      ]
+    , nd
+      [ nd
+        [ lf H
+        , nd $ leaves [A, A]    -- $
+        ]
+      , nd $ leaves [A, A]      -- $
+      ]
+    ]
+  where nd     = Node Nothing
+        lf x   = Node (Just x) []
+        leaves = map lf
+
+data Type = A || B || H
+
+drawType A = text "a" # italic # centerX <> square 2 # fc yellow
+drawType B = text "b" # italic # centerX <> circle 1 # fc red
+drawType H = circle 1 # fc white # dashingG [0.2,0.2] 0
+
+renderT
+  = renderTree
+      (\x -> case x of
+          Nothing -> mempty
+          Just t  -> drawType t
+      )
+      (~~)
+  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
+
+dia = renderT t # frame 0.5
+      \end{diagram}
+    \end{center}
+    &
+    \begin{center}
+    \begin{diagram}[height=75]
 import Data.Maybe
 
 import Data.Tree
@@ -169,7 +211,7 @@ node (t,f) ys = (d, Node (mkNode (t, d)) ts)
     (ds, ts) = unzip ys
     d = f ds
 
-t = snd $ node top [node rd [leaf c], node trans [node bl [leaf c]]]  -- $
+t = snd $ node top [node rd [leaf c], node trans [leaf c]]  -- $
 
 d = renderTree id (~~)
       (symmLayout' (with & slWidth  .~ fromMaybe (0,0) . extentX
@@ -182,9 +224,10 @@ d = renderTree id (~~)
 
 dia = d # lw thin # frame 0.5
     \end{diagram}
+    \end{center}
   \end{tabular}
 
-  Functional programming, types, math
+  Common threads: functional programming, type systems, mathematics
   \end{center}
 \end{xframe}
 
@@ -309,8 +352,7 @@ dia = d # lw thin # frame 0.5
       & ability to tweak and modify
     \end{tabular} \bigskip
 
-    % XXX TODO need image here to illustrate "flexibility"
-    %\includegraphics[width=2in]{Excel-barchart}
+    \includegraphics[width=1.5in]{inkscape-stroke-opts}
   \end{center}
 \end{xframe}
 
@@ -322,7 +364,7 @@ dia = d # lw thin # frame 0.5
         import Control.Lens (ix, foldOf)
         dia = foldOf (ix "learning") criteria # frame 0.5
       \end{diagram}
-      & pick it up quickly
+      & how hard is it to get started?
     \end{tabular} \bigskip
 
     % XXX TODO need image to illustrate "learning curve"
@@ -414,7 +456,9 @@ dia = d # lw thin # frame 0.5
 
 \begin{xframe}{General-Purpose Languages}
   \begin{center}
-    XXX icons for Java, C++, etc. \bigskip
+  \includegraphics[width=0.75in]{Java-logo-big} \hfill
+  \includegraphics[width=1in]{Cpp-logo} \hfill
+  \includegraphics[width=1in]{racket-logo} \bigskip
 
   \begin{overprint}
   \onslide<2>
@@ -449,11 +493,11 @@ dia = d # lw thin # frame 0.5
 
 \begin{xframe}{Domain-specific languages (DSLs)}
   \begin{center}
-    \begin{tabular}{m{1in} m{1in} m{1in} m{1in}}
-      \includegraphics[width=1in]{Asymptote-logo} &
-      \includegraphics[width=1in]{MPlogo.png} &
-      Postscript &
-      PGF/TikZ
+    \begin{tabular}{m{0.8in} m{0.8in} m{0.8in} m{0.8in}}
+      \includegraphics[width=0.8in]{Asymptote-logo} &
+      \includegraphics[width=0.8in]{MPlogo} &
+      \includegraphics[width=0.8in]{postscript-logo} &
+      \includegraphics[width=0.8in]{tikz-logo}
     \end{tabular}
 
   \begin{overprint}
@@ -720,7 +764,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
 %% Diagrams: theory of monoids.  Also monoid actions.  Affine spaces.
 %% Animations based on 2-categories.
 
-\begin{xframe}{Mathematically based}
+\begin{xframe}{Mathematical foundation}
   %% XXX reword this title?
   XX
 \end{xframe}

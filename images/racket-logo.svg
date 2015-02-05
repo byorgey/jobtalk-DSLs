@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="RacketLogo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="525px" height="525px" viewBox="0 0 525 525">
+	<defs>
+		<radialGradient id="TransGrad" cx="218" cy="218" r="260" fx="156" fy="156" gradientUnits="userSpaceOnUse">
+			<stop offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+			<stop offset="0.5" style="stop-color:#BBBBBB;stop-opacity:0.1"/>
+			<stop offset="1" style="stop-color:#444444;stop-opacity:0.6"/>
+		</radialGradient>
+		<filter id="Multiply">
+			<feBlend mode="multiply" in2="BackgroundImage"/>
+		</filter>
+	</defs>
+	<g enable-background="new">
+		<circle id="DiscRed" fill="#FF0000" cx="262.5" cy="262.5" r="262.5"/>
+		<path id="DiscBlue" fill="#0000FF" d="M262.5,0c-16.896,0-33.413,1.616-49.421,4.666l223.79,454.032 C490.931,410.616,525,340.542,525,262.5C525,117.525,407.475,0,262.5,0z"/>
+		<path id="Lambda" fill="#FFFFFF" d="M460.914,434.371c-17.52-53.883-58.863-137.542-102.162-230.604 c-56.335-121.08-68.947-178.256-92.491-190.029c-10.493-5.247-23.627-10.477-39.708-11.277 c-28.94,3.964-56.375,12.642-81.509,25.239c26.111-4.693,47.205-14.758,58.996-8.076c25.225,14.296,47.086,82.403,44.564,109.308 c-8.6,91.729-90.81,167.327-159.053,331.025c4.719,4.137,9.586,8.105,14.595,11.899l37.672-5.751 c0,0,108.507-285.479,127.807-286.724c26.065-1.682,113.512,284.201,120.238,292.609c3.116,3.896,9.481,7.608,16.169,10.307 C426.482,468.916,444.962,452.771,460.914,434.371z"/>
+		<circle id="Highlight" fill="url(#TransGrad)" filter="url(#Multiply)" cx="262.5" cy="262.5" r="262.5"/>
+	</g>
+</svg>
