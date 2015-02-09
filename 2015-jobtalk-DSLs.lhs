@@ -15,8 +15,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\theschool}{College University}
-\newcommand{\thedate}{Februvember 43, 19823}
+\newcommand{\theschool}{Grinnell College}
+\newcommand{\thedate}{February 9, 2015}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,8 +53,8 @@
       \frametitle{}
 
       \begin{center}
-        \includegraphics[width=2in]{\sectionimg}
-        \bigskip
+        %% \includegraphics[width=2in]{\sectionimg}
+        %% \bigskip
 
         {\Huge \insertsectionhead}
       \end{center}
@@ -106,7 +106,7 @@
 \title{Designing domain-specific languages and tools}
 \date{\theschool \\ \thedate}
 \author{Brent Yorgey}
-\titlegraphic{}  % \includegraphics[width=2in]{foo}
+\titlegraphic{\includegraphics[width=0.5in]{diagrams_logo}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -139,109 +139,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{xframe}{My research}
-  \begin{center}
-  \begin{tabular}{m{2in} m{2in}}
-    \centering Combinatorics \linebreak and data types &
-    \begin{center} Domain-specific \linebreak languages \end{center}
-    \\
-    \begin{center}
-      \begin{diagram}[height=75]
-import Diagrams.TwoD.Layout.Tree
-import Data.Tree
-
-t = nd
-    [ nd
-      [ nd $                    -- $
-          leaves [B, B]
-      , lf B
-      ]
-    , nd
-      [ nd
-        [ lf H
-        , nd $ leaves [A, A]    -- $
-        ]
-      , nd $ leaves [A, A]      -- $
-      ]
-    ]
-  where nd     = Node Nothing
-        lf x   = Node (Just x) []
-        leaves = map lf
-
-data Type = A || B || H
-
-drawType A = text "a" # italic # centerX <> square 2 # fc yellow
-drawType B = text "b" # italic # centerX <> circle 1 # fc red
-drawType H = circle 1 # fc white # dashingG [0.2,0.2] 0
-
-renderT
-  = renderTree
-      (\x -> case x of
-          Nothing -> mempty
-          Just t  -> drawType t
-      )
-      (~~)
-  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
-
-dia = renderT t # frame 0.5
-      \end{diagram}
-    \end{center}
-    &
-    \begin{center}
-    \begin{diagram}[height=75]
-import Data.Maybe
-
-import Data.Tree
-import Diagrams.TwoD.Layout.Tree hiding (leaf)
-
-c = ("circle 5", circle 5)
-trans = ("translateX 3", singl (translateX 3))
-rd  = ("fc red", singl (fc red))
-bl = ("fc blue", singl (fc blue))
-top = ("atop", mconcat)
-
-singl f = mconcat . map f
-
-mkNode (t,d) = text t # scale 2 <> d # opacity 0.2 <> roundedRect 18 12 1 # fc white
-
-leaf x = (snd x, Node (mkNode x) [])
-node (t,f) ys = (d, Node (mkNode (t, d)) ts)
-  where
-    (ds, ts) = unzip ys
-    d = f ds
-
-t = snd $ node top [node rd [leaf c], node trans [leaf c]]  -- $
-
-d = renderTree id (~~)
-      (symmLayout' (with & slWidth  .~ fromMaybe (0,0) . extentX
-                         & slHeight .~ fromMaybe (0,0) . extentY
-                         & slHSep   .~ 3
-                         & slVSep   .~ 3
-                   )
-         t
-      )
-
-dia = d # lw thin # frame 0.5
-    \end{diagram}
-    \end{center}
-  \end{tabular}
-
-  Common threads: functional programming, type systems, mathematics
-  \end{center}
-\end{xframe}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\sectionimg{sandwich-too-full.jpg}
+%% Introduction 
 
-\section{Problems with paradigms}
-\label{sec:problems}
+%% Thanks very much for the introduction, thanks for
+%% having me here.  I want to start with a challenge.
 
-%%
-%% Suppose you wanted to produce this image.  How long would it take you?
+%% Suppose you wanted to produce this image.  How would you do it?
+%% What sort of tools would you use, how long do you think it would
+%% take you?
+%% [Ask for feedback.]
 
 \begin{xframe}{}
   \begin{center}
@@ -255,7 +163,11 @@ dia = d # lw thin # frame 0.5
 
 %% Now how about this one?  What are the challenges?  It's repetetive,
 %% but in a not entirely straightforward way.  Would be really tedious
-%% with e.g. Inkscape/Illustrator/Gimp/Photoshop or whatever.
+%% with e.g. Inkscape/Illustrator/Gimp/Photoshop or whatever.  Perhaps
+%% just doable.
+%% [Feedback: how would you do this?  How long would it take you?]
+%%
+%% [See how many have taken 151 with drawing in Racket.]
 
 \begin{xframe}{}
   \begin{center}
@@ -280,8 +192,64 @@ dia = d # lw thin # frame 0.5
   \end{center}
 \end{xframe}
 
+%% Or add a bit of extra space and rotation?
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=200]
+      import Hypothetical
+      import Control.Lens (ix)
+
+      dia = perms4mod (colors & ix 1 .~ purple)
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+%% XXX Need to decide exactly what to say here.
+
+%% Now, one thing you might be wondering is, how did *I* make these
+%%   images??  In fact, I have a great solution to this problem: a
+%%   *domain-specific language* for creating vector graphics.  XXX
+%%   finish.
+
+
+\begin{xframe}{Outline}
+  \begin{itemize}
+    \item<+-> Paradigms for problem-solving: tools and languages
+    \item<+-> Embedded domain-specific languages
+    \item<+-> Diagrams demo
+    \item<+-> A vision for combining software tools + languages
+  \end{itemize}
+\end{xframe}
+
+\section{Paradigms}
+\label{sec:paradigms}
+
+\begin{xframe}{Paradigms for problem solving}
+  \begin{itemize}
+  \item Software tools 
+    \includegraphics[height=0.25in]{illustrator_logo}
+    \includegraphics[height=0.25in]{inkscape_logo}
+    \includegraphics[height=0.25in]{photoshop_logo}
+    \includegraphics[height=0.25in]{GIMP_logo}
+  \item General-purpose languages
+    \includegraphics[height=0.25in]{Java-logo-big}
+    \includegraphics[height=0.25in]{Cpp-logo}
+    \includegraphics[height=0.25in]{racket-logo}
+  \item Domain-specific languages
+    \includegraphics[height=0.25in]{Asymptote-logo}
+    \includegraphics[height=0.15in]{MPlogo}
+    \includegraphics[height=0.25in]{postscript-logo}
+    \includegraphics[height=0.25in]{tikz-logo}
+  \item Embedded domain-specific languages
+    \begin{diagram}[width=15]
+      import Diagrams.Example.Logo
+      dia = ico_d
+    \end{diagram}
+  \end{itemize}
+\end{xframe}
+
 %% Some criteria for evaluating potential solutions.
-%% XXX todo: center text WRT images!
 
 \begin{xframe}{Criteria}
   \begin{center}
@@ -337,7 +305,7 @@ dia = d # lw thin # frame 0.5
       & ability to do complex things
     \end{tabular} \bigskip
 
-    \includegraphics[width=2in]{Excel-barchart}
+    \includegraphics[width=2in]{excel-graph}
   \end{center}
 \end{xframe}
 
@@ -352,7 +320,7 @@ dia = d # lw thin # frame 0.5
       & ability to tweak and modify
     \end{tabular} \bigskip
 
-    \includegraphics[width=1.5in]{inkscape-stroke-opts}
+    \includegraphics[width=1.5in]{excel-graph}
   \end{center}
 \end{xframe}
 
@@ -405,179 +373,211 @@ dia = d # lw thin # frame 0.5
   \end{center}
 \end{xframe}
 
-\begin{xframe}{Paradigms for problem solving}
-  \begin{itemize}
-  \item Tools (software)
-  \item General-purpose languages
-  \item Domain-specific languages
-  \item Embedded domain-specific languages
-  \end{itemize}
-\end{xframe}
-
-%% There are some well-known software *tools* for making
-%% images/diagrams like this.
-
-\begin{xframe}{Tools}
+\begin{xframe}{}
   \begin{center}
-  \includegraphics[width=1in]{illustrator_logo} \hfill
-  \includegraphics[width=1in]{inkscape_logo} \hfill
-  \includegraphics[width=1in]{photoshop_logo} \hfill
-  \includegraphics[width=1in]{GIMP_logo} \bigskip
-
-  \begin{overprint}
-  \onslide<2>
-  \begin{center}
-  \begin{diagram}[width=250]
+    \begin{diagram}[width=200]
     import Icons
-    dia = criteriaTable
-  \end{diagram}
-  \end{center}
-  \onslide<3>
-  \begin{center}
-    \begin{diagram}[width=250]
-    import Icons
-    dia = drawTable
-      [ [power           , happy ]
-      , [flexibility     , meh   ]
-      , [learning        , happy ]
-      , [programmability , sad   ]
-      ]
+    dia = drawTable (theTable # hideRows [1..4])
       # frame 0.5
     \end{diagram}
-  \end{center}
-  \end{overprint}
-  \end{center}
-\end{xframe}
-
-%% Could write *programs* to generate drawings.  But using
-%% general-purpose languages for this is annoying.  Spend a lot of
-%% time on tedious, repetitive boilerplate that has nothing to do with
-%% drawing in particular.
-
-\begin{xframe}{General-Purpose Languages}
-  \begin{center}
-  \includegraphics[width=0.75in]{Java-logo-big} \hfill
-  \includegraphics[width=1in]{Cpp-logo} \hfill
-  \includegraphics[width=1in]{racket-logo} \bigskip
-
-  \begin{overprint}
-  \onslide<2>
-  \begin{center}
-  \begin{diagram}[width=250]
-    import Icons
-    dia = criteriaTable
-  \end{diagram}
-  \end{center}
-  \onslide<3>
-  \begin{center}
-  \begin{diagram}[width=250]
-    import Icons
-    dia = drawTable
-      [ [power           , sad   ]
-      , [flexibility     , happy ]
-      , [learning        , sad   ]
-      , [programmability , happy ]
-      ]
-      # frame 0.5
-    \end{diagram}
-    \end{center}
-  \end{overprint}
-  \end{center}
-\end{xframe}
-
-%% Better to use *domain-specific* languages.
-
-% List of downsides: these are all pretty terrible languages!  Can't
-% easily combine with computation.  e.g. computing all permutations in
-% order to draw them.
-
-\begin{xframe}{Domain-specific languages (DSLs)}
-  \begin{center}
-    \begin{tabular}{m{0.8in} m{0.8in} m{0.8in} m{0.8in}}
-      \includegraphics[width=0.8in]{Asymptote-logo} &
-      \includegraphics[width=0.8in]{MPlogo} &
-      \includegraphics[width=0.8in]{postscript-logo} &
-      \includegraphics[width=0.8in]{tikz-logo}
-    \end{tabular}
-
-  \begin{overprint}
-  \onslide<2>
-  \begin{center}
-  \begin{diagram}[width=250]
-    import Icons
-    dia = criteriaTable
-  \end{diagram}
-  \end{center}
-
-  \onslide<3>
-  \begin{center}
-  \begin{diagram}[width=250]
-    import Icons
-    dia = drawTable
-      [ [power           , happy ]
-      , [flexibility     , happy ]
-      , [learning        , meh   ]
-      , [programmability , meh   ]
-      ]
-      # frame 0.5
-    \end{diagram}
-    \end{center}
-  \end{overprint}
-  \end{center}
-\end{xframe}
-
-\begin{xframe}{Embedded DSLs}
-  \begin{center}
-    \begin{diagram}[width=30]
-      import Diagrams.Example.Logo
-      dia = ico_d
-    \end{diagram}
-
-  \begin{overprint}
-  \onslide<2>
-  \begin{center}
-  \begin{diagram}[width=250]
-    import Icons
-    dia = criteriaTable
-  \end{diagram}
-  \end{center}
-
-  \onslide<3>
-  \begin{center}
-  \begin{diagram}[width=250]
-    import Icons
-    dia = drawTable
-      [ [power           , happy ]
-      , [flexibility     , happy ]
-      , [learning        , meh   ]
-      , [programmability , happy ]
-      ]
-      # frame 0.5
-  \end{diagram}
-  \end{center}
-  \end{overprint}
   \end{center}
 \end{xframe}
 
 \begin{xframe}{}
   \begin{center}
-    \Huge{Demo!}
+    \begin{diagram}[width=200]
+    import Icons
+    dia = drawTable (theTable # hideRows [2..4])
+      # frame 0.5
+    \end{diagram}
   \end{center}
 \end{xframe}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=200]
+    import Icons
+    dia = drawTable (theTable # hideRows [3,4])
+      # frame 0.5
+    \end{diagram}
+  \end{center}
+\end{xframe}
 
-%% XXX better image
-\def\sectionimg{tree.jpg}
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=200]
+    import Icons
+    dia = drawTable (theTable # hideRows [4])
+      # frame 0.5
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=200]
+    import Icons
+    dia = drawTable (theTable)
+      # frame 0.5
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+%% %% There are some well-known software *tools* for making
+%% %% images/diagrams like this.
+
+%% \begin{xframe}{Software tools}
+%%   \begin{center}
+%%   \includegraphics[width=1in]{illustrator_logo} \hfill
+%%   \includegraphics[width=1in]{inkscape_logo} \hfill
+%%   \includegraphics[width=1in]{photoshop_logo} \hfill
+%%   \includegraphics[width=1in]{GIMP_logo} \bigskip
+
+%%   \begin{overprint}
+%%   \onslide<2>
+%%   \begin{center}
+%%   \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = criteriaTable
+%%   \end{diagram}
+%%   \end{center}
+%%   \onslide<3>
+%%   \begin{center}
+%%     \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = drawTable
+%%       [ [power           , happy ]
+%%       , [flexibility     , meh   ]
+%%       , [learning        , happy ]
+%%       , [programmability , sad   ]
+%%       ]
+%%       # frame 0.5
+%%     \end{diagram}
+%%   \end{center}
+%%   \end{overprint}
+%%   \end{center}
+%% \end{xframe}
+
+%% %% Could write *programs* to generate drawings.  But using
+%% %% general-purpose languages for this is annoying.  Spend a lot of
+%% %% time on tedious, repetitive boilerplate that has nothing to do with
+%% %% drawing in particular.
+
+%% \begin{xframe}{General-Purpose Languages}
+%%   \begin{center}
+%%   \includegraphics[width=0.75in]{Java-logo-big} \hfill
+%%   \includegraphics[width=1in]{Cpp-logo} \hfill
+%%   \includegraphics[width=1in]{racket-logo} \bigskip
+
+%%   \begin{overprint}
+%%   \onslide<2>
+%%   \begin{center}
+%%   \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = criteriaTable
+%%   \end{diagram}
+%%   \end{center}
+%%   \onslide<3>
+%%   \begin{center}
+%%   \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = drawTable
+%%       [ [power           , sad   ]
+%%       , [flexibility     , happy ]
+%%       , [learning        , sad   ]
+%%       , [programmability , happy ]
+%%       ]
+%%       # frame 0.5
+%%     \end{diagram}
+%%     \end{center}
+%%   \end{overprint}
+%%   \end{center}
+%% \end{xframe}
+
+%% %% Better to use *domain-specific* languages.
+
+%% % List of downsides: these are all pretty terrible languages!  Can't
+%% % easily combine with computation.  e.g. computing all permutations in
+%% % order to draw them.
+
+%% \begin{xframe}{Domain-specific languages (DSLs)}
+%%   \begin{center}
+%%     \begin{tabular}{m{0.8in} m{0.8in} m{0.8in} m{0.8in}}
+%%       \includegraphics[width=0.8in]{Asymptote-logo} &
+%%       \includegraphics[width=0.8in]{MPlogo} &
+%%       \includegraphics[width=0.8in]{postscript-logo} &
+%%       \includegraphics[width=0.8in]{tikz-logo}
+%%     \end{tabular}
+
+%%   \begin{overprint}
+%%   \onslide<2>
+%%   \begin{center}
+%%   \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = criteriaTable
+%%   \end{diagram}
+%%   \end{center}
+
+%%   \onslide<3>
+%%   \begin{center}
+%%   \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = drawTable
+%%       [ [power           , happy ]
+%%       , [flexibility     , happy ]
+%%       , [learning        , meh   ]
+%%       , [programmability , meh   ]
+%%       ]
+%%       # frame 0.5
+%%     \end{diagram}
+%%     \end{center}
+%%   \end{overprint}
+%%   \end{center}
+%% \end{xframe}
+
+%% \begin{xframe}{Embedded DSLs}
+%%   \begin{center}
+%%     \begin{diagram}[width=30]
+%%       import Diagrams.Example.Logo
+%%       dia = ico_d
+%%     \end{diagram}
+
+%%   \begin{overprint}
+%%   \onslide<2>
+%%   \begin{center}
+%%   \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = criteriaTable
+%%   \end{diagram}
+%%   \end{center}
+
+%%   \onslide<3>
+%%   \begin{center}
+%%   \begin{diagram}[width=250]
+%%     import Icons
+%%     dia = drawTable
+%%       [ [power           , happy ]
+%%       , [flexibility     , happy ]
+%%       , [learning        , meh   ]
+%%       , [programmability , happy ]
+%%       ]
+%%       # frame 0.5
+%%   \end{diagram}
+%%   \end{center}
+%%   \end{overprint}
+%%   \end{center}
+%% \end{xframe}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Domain-specific languages}
 \label{sec:DSLs}
 
 \begin{xframe}{}
   \begin{center}
-    What makes a good domain-specific language?
+    \textbf{What makes a good domain-specific language?}
   \end{center}
 \end{xframe}
 
@@ -592,9 +592,6 @@ dia = d # lw thin # frame 0.5
 \begin{xframe}{}
 
 \begin{center}
-  How would you write code to generate this?
-  \bigskip
-
   \begin{diagram}[width=100]
     dia = mconcat
       [ circle 5 # translateX 3 # fc blue
@@ -628,9 +625,12 @@ Better:
 \end{center}
 \end{overprint}
 
-\onslide<4>
+%% Notice the structure of the code reflects the structure of the
+%% solution.
+
+\onslide<4->
 \begin{center}
-  \textit{Look ma, no coordinates!}
+\emph{The structure of the code reflects the structure of the solution.}
 \end{center}
 
 \end{xframe}
@@ -679,9 +679,14 @@ dia = d # lw thin # frame 0.5
 
   \begin{itemize}
   \item<2-> Build up complex things by combining simple things.
-  \item<3-> The \emph{meaning} of the whole is determined by the
-    \emph{meaning} of the parts.
+  \item<3-> \emph{The meaning of the whole is determined by the
+    meaning of the parts.}
   \end{itemize}
+
+  %% Put another way: once you have determined the meaning of the
+  %% parts you don't have to think about their implementations
+  %% anymore.  This is just good old abstraction.  There should also
+  %% be elegant ways to combine the meanings.
 
 \end{xframe}
 
@@ -698,14 +703,14 @@ import Data.List
 import Diagrams.TwoD.Layout.Tree hiding (leaf)
 import Data.Tree
 
-unit :: String -> Tree String
-unit x = Node (x ++ ".o") [ Node (x ++ ".c") [] ]
+cunit :: String -> Tree String
+cunit x = Node (x ++ ".o") [ Node (x ++ ".c") [] ]
 
 t :: Tree String
 t = Node "prog.exe"
-    [ unit "foo"
-    , unit "bar"
-    , unit "baz"
+    [ cunit "foo"
+    , cunit "bar"
+    , cunit "baz"
     ]
 
 dia = lw thin
@@ -761,25 +766,29 @@ cat foo.txt | grep 'walrus' | sort | uniq
 %%
 %% Examples: 
 %%
-%% Diagrams: theory of monoids.  Also monoid actions.  Affine spaces.
+%% Diagrams: theory of monoids. Affine spaces.
 %% Animations based on 2-categories.
 
-\begin{xframe}{Mathematical foundation}
-  %% XXX reword this title?
-  XX
+\begin{xframe}{Mathematical foundations}
+  \onslide<2-> 
+  \begin{center}
+    \emph{The best (domain-specific) languages are those designed with
+    elegant mathematical semantics.}
+  \end{center}
 \end{xframe}
 
-\begin{xframe}{}
+\begin{xframe}{Monoids}
   \begin{center}
     \begin{diagram}[width=200]
       {-# LANGUAGE FlexibleInstances #-}
-      import LGMDiagrams
+
+      mkColor c = roundedRect 1 1 0.1 # lw none # fc c
 
       eqn vis a b = hcat' (with & sep .~ 1) [vis a, text "+", vis b, text "=" # named "ctr", vis (a `mappend` b)]
         # withName "ctr" (\sub -> translate (origin .-. location sub))
 
       newtype Next a = Next { getNext :: a }
-      instance Monoid (Next (Diagram B R2)) where
+      instance Monoid (Next (QDiagram B V2 Double Any)) where
         mempty = Next mempty
         (Next a) `mappend` (Next b) = Next (a |||||| b)
 
@@ -811,37 +820,42 @@ cat foo.txt | grep 'walrus' | sort | uniq
   \end{center}
 \end{xframe}
 
+\begin{xframe}{Affine spaces}
+  \begin{center}
+    \begin{diagram}[width=250]
+      dia = hcat [ strutX 2, circle 0.1 # fc black, strutX 3, arrowV (4 ^& 3) # centerY ]
+          # frame 0.5
+    \end{diagram}
+
+    \mbox{} \hfill $(x,y)$  \hfill $\stackrel{?}{=}$ \hfill $(x,y)$ \hfill \mbox{}
+  \end{center}
+\end{xframe}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{xframe}{}
-    XXX mention affine spaces, paths and trails, etc. ?
+  \begin{center}
+    \Huge{Demo!}
+  \end{center}
 \end{xframe}
-
-\begin{xframe}{}
-   XXX mention 2-categories for animation ?
-\end{xframe}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{xframe}{Embedded?}
-  XX
-\end{xframe}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Use mock-up of DSL here
-\def\sectionimg{tree.jpg}
-
-\section{GUIs as DSLs}
+\section{Tools as languages}
 \label{sec:GUIs}
 
 %% Can we have something with happy faces across the board?
 
 \begin{xframe}{}
   \begin{center}
+    \onslide<2->
     \includegraphics[width=2in]{grail} \bigskip
 
+    \onslide<1->
     \begin{diagram}[width=250]
       import Icons
       dia = drawTable
@@ -855,13 +869,229 @@ cat foo.txt | grep 'walrus' | sort | uniq
   \end{center}
 \end{xframe}
 
+%% You might think this is a pipe dream. The reason this is even
+%% possible to contemplate is that the structure of the language
+%% matches the structure of things being constructed.  Also,
+%% compilation process that preserves provenance.
+
 \begin{xframe}{}
-  More slides here, about GUI etc.
+  \begin{center}
+    \begin{diagram}[width=250]
+      import GUI
+      dia = menuBar === guiFrame (theCode # font "Courier" # scale 0.07) theDia
+
+      theDia = 
+        mconcat
+        [ circle 1 # fc blue
+        , mouseCursor # moveTo (3 ^& (-2))
+        , circle 1.5 # fc green # translate (3 ^& (-2))
+        , triangle 1 # fc yellow # translate (1 ^& (-5))
+        ]
+
+      theCode = text . unlines $
+        [ "mconcat"
+        , "  [ circle 1 # fc blue"
+        , "  , circle 1.5 # fc green" 
+        , "      # translate (3 ^& (-2))"
+        , "  , triangle 1 # fc yellow"
+        , "      # translate (1 ^& (-5))"
+        , "  ]"
+        ]
+
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import GUI
+      dia = menuBar === guiFrame (theCode # fontSizeL 0.07 # font "Courier") theDia
+
+      theDia = 
+        mconcat
+        [ circle 1 # fc blue
+        , mouseCursor # moveTo newPos
+        , circle 1.5 # fc green # moveTo newPos
+        , circle 1.5 # fc green # translate (3 ^& (-2)) # opacity 0.2
+        , triangle 1 # fc yellow # translate (1 ^& (-5))
+        ]
+
+      newPos = 2 ^& (-1)
+
+      theCode = text . unlines $
+        [ "mconcat"
+        , "  [ circle 1 # fc blue"
+        , "  , circle 1.5 # fc green" 
+        , "      # translate (2 ^& (-1))"
+        , "  , triangle 1 # fc yellow"
+        , "      # translate (1 ^& (-5))"
+        , "  ]"
+        ]
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import GUI
+      
+      dia =
+        menuBar === circle 1 # frame 0.5 # lc red # lw thick # enframe' 4 3
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import GUI
+      
+      dia = mconcat
+        [ mouseCursor # scale 0.35 # moveTo ((-0.1) ^& (-1.2))
+        , wiggleMenu
+        , menuBar === circle 1 # frame 0.5 # lc red # lw thick # enframe' 4 3
+        ]
+
+      wiggleMenu = menu 0.7 ["Foozle", "Wibble", "Bazify", "Enhance", "Magic", "Wiggly"] # translateY (-0.2) # translateX (-0.6)
+
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import GUI
+      
+      dia = mconcat
+        [ mouseCursor # scale 0.35 # moveTo ((-0.1) ^& (-1.2))
+        , menuBar === circle 1 # wiggly 30 0.03 # strokeTrail # frame 0.5 # lc red # lw thick # enframe' 4 3 
+        ]
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import GUI
+      import Data.Maybe
+
+      import Data.Tree
+      import Diagrams.TwoD.Layout.Tree hiding (leaf)
+
+      dia = 
+        menuBar 
+        === 
+        (treeView |||||| diaView) # centerX
+
+      treeView = theTree # frame 20 # enframe
+      diaView  = circle 1 # wiggly 30 0.03 # strokeTrail 
+                          # frame 0.5 # lc red # lw thick # enframe
+
+      c = ("circle 1", mempty)
+      rd  = ("lc red", singl id)
+      wig = ("wiggly 30 0.3", singl id)
+
+      singl f = mconcat . map f
+
+      mkNode (t,d) = text t # scale 2 <> d # opacity 0.2 <> roundedRect 18 12 1 # fc white
+
+      leaf x = (snd x, Node (mkNode x) [])
+      node (t,f) ys = (d, Node (mkNode (t, d)) ts)
+        where
+         (ds, ts) = unzip ys
+         d = f ds
+
+      t = snd $ node wig [node rd [leaf c]]  -- $
+
+      theTree = renderTree id (~~)
+            (symmLayout' (with & slWidth  .~ fromMaybe (0,0) . extentX
+                               & slHeight .~ fromMaybe (0,0) . extentY
+                               & slHSep   .~ 3
+                               & slVSep   .~ 3
+                         )
+               t
+            )
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import GUI
+      import Data.Maybe
+
+      import Data.Tree
+      import Diagrams.TwoD.Layout.Tree hiding (leaf)
+
+      dia = 
+        menuBar 
+        === 
+        ((treeView |||||| diaView) # centerX === codeView)
+
+      treeView = theTree # frame 10 # enframe' 2 1.5
+      codeView = enframe' 4 1.5 . font "Courier" . scale 0.07 . text $ unlines
+        [ "wiggly :: Double -> Double -> Trail V2 Double -> Trail V2 Double"
+        , "wiggly n m tr"
+        , "  = cubicSpline False"
+        , "  . map (\\(t, off, norm) -> origin .+^ off .+^"
+        , "                            ((m * sin (tau * n * t)) *^ norm))"
+        , "  . map (\\t -> (t, tr `atParam` t, tr `normalAtParam` t))"
+        , "  $ [0, 0.01 .. 1]"
+        ]
+
+      diaView  = circle 1 # wiggly 30 0.03 # strokeTrail 
+                          # frame 0.5 # lc red # lw thick # enframe' 2 1.5
+
+      c = ("circle 1", mempty)
+      rd  = ("lc red", singl id)
+      wig = ("wiggly 30 0.3", singl id)
+
+      singl f = mconcat . map f
+
+      mkNode (t,d) = text t # scale 2 <> d # opacity 0.2 <> roundedRect 18 12 1 # fc white
+
+      leaf x = (snd x, Node (mkNode x) [])
+      node (t,f) ys = (d, Node (mkNode (t, d)) ts)
+        where
+         (ds, ts) = unzip ys
+         d = f ds
+
+      t = snd $ node wig [node rd [leaf c]]  -- $
+
+      theTree = renderTree id (~~)
+            (symmLayout' (with & slWidth  .~ fromMaybe (0,0) . extentX
+                               & slHeight .~ fromMaybe (0,0) . extentY
+                               & slHSep   .~ 3
+                               & slVSep   .~ 3
+                         )
+               t
+            )
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+%% Things to say on this slide:
+%%
+%% 1. Note structure of code reflects structure of solution.
+%% 2. Code you see is built from simpler pieces.  Never too messy.
+%% 3. ???
+
+%% XXX Need to decide how to end.  Decide exactly what to say.
+
+\begin{xframe}{}
+  \begin{center}
+    {\large Thank you!} \bigskip
+
+    Questions?
+  \end{center}
 \end{xframe}
 
 \end{document}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1178,3 +1408,99 @@ cat foo.txt | grep 'walrus' | sort | uniq
 
 % %% TODO: What should go in this section?  Anything?  Think I need to
 % %% step back a bit again and brainstorm.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Old slide about the two threads to my research
+
+%% \begin{xframe}{My research}
+%%   \begin{center}
+%%   \begin{tabular}{m{2in} m{2in}}
+%%     \centering Combinatorics \linebreak and data types &
+%%     \begin{center} Domain-specific \linebreak languages \end{center}
+%%     \\
+%%     \begin{center}
+%%       \begin{diagram}[height=75]
+%% import Diagrams.TwoD.Layout.Tree
+%% import Data.Tree
+
+%% t = nd
+%%     [ nd
+%%       [ nd $                    -- $
+%%           leaves [B, B]
+%%       , lf B
+%%       ]
+%%     , nd
+%%       [ nd
+%%         [ lf H
+%%         , nd $ leaves [A, A]    -- $
+%%         ]
+%%       , nd $ leaves [A, A]      -- $
+%%       ]
+%%     ]
+%%   where nd     = Node Nothing
+%%         lf x   = Node (Just x) []
+%%         leaves = map lf
+
+%% data Type = A || B || H
+
+%% drawType A = text "a" # italic # centerX <> square 2 # fc yellow
+%% drawType B = text "b" # italic # centerX <> circle 1 # fc red
+%% drawType H = circle 1 # fc white # dashingG [0.2,0.2] 0
+
+%% renderT
+%%   = renderTree
+%%       (\x -> case x of
+%%           Nothing -> mempty
+%%           Just t  -> drawType t
+%%       )
+%%       (~~)
+%%   . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
+
+%% dia = renderT t # frame 0.5
+%%       \end{diagram}
+%%     \end{center}
+%%     &
+%%     \begin{center}
+%%     \begin{diagram}[height=75]
+%% import Data.Maybe
+
+%% import Data.Tree
+%% import Diagrams.TwoD.Layout.Tree hiding (leaf)
+
+%% c = ("circle 5", circle 5)
+%% trans = ("translateX 3", singl (translateX 3))
+%% rd  = ("fc red", singl (fc red))
+%% bl = ("fc blue", singl (fc blue))
+%% top = ("atop", mconcat)
+
+%% singl f = mconcat . map f
+
+%% mkNode (t,d) = text t # scale 2 <> d # opacity 0.2 <> roundedRect 18 12 1 # fc white
+
+%% leaf x = (snd x, Node (mkNode x) [])
+%% node (t,f) ys = (d, Node (mkNode (t, d)) ts)
+%%   where
+%%     (ds, ts) = unzip ys
+%%     d = f ds
+
+%% t = snd $ node top [node rd [leaf c], node trans [leaf c]]  -- $
+
+%% d = renderTree id (~~)
+%%       (symmLayout' (with & slWidth  .~ fromMaybe (0,0) . extentX
+%%                          & slHeight .~ fromMaybe (0,0) . extentY
+%%                          & slHSep   .~ 3
+%%                          & slVSep   .~ 3
+%%                    )
+%%          t
+%%       )
+
+%% dia = d # lw thin # frame 0.5
+%%     \end{diagram}
+%%     \end{center}
+%%   \end{tabular}
+
+%%   Common threads: functional programming, type systems, mathematics
+%%   \end{center}
+%% \end{xframe}

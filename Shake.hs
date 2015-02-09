@@ -13,12 +13,13 @@ main = shake shakeOptions $ do
 
     "*.tex" *> \output -> do
         let input = replaceExtension output "lhs"
-        need [input]  -- Add any diagrams .hs files
+        hsFiles <- getDirectoryFiles "" ["*.hs"]
+        need (input : hsFiles)
         cmd lhs2TeX $ ["--poly", "-o", output] ++ [input]
 
     "*.pdf" *> \output -> do
         let input = replaceExtension output "tex"
-        need [input]
+        need [input, "GUI.hs", "Icons.hs", "Hypothetical.hs"]
         cmd pdflatex $ ["--enable-write18", input]
 --        cmd "scp" [output, "byorgey@rath:"]
 --        system' pdflatex $ ["--enable-write18", input]

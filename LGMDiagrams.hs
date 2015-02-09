@@ -29,17 +29,17 @@ vgDia = mconcat
 vg = enbox 1 (vgDia <> strutX 1 <> strutY 1)
        ["Vector graphics"]
 
-mkDiagrams d = hcat' (with & sep .~ 2)
-  [ pl # named "pl"
-  , enbox 1.3 d ["Diagrams"] # named "d"
-  , vg # named "vg"
-  ]
-  # connectOutside' aOpts "pl" "d"
-  # connectOutside' aOpts "vg" "d"
-  # centerXY
-  # frame 1
+-- mkDiagrams d = hcat' (with & sep .~ 2)
+--   [ pl # named "pl"
+--   , enbox 1.3 d ["Diagrams"] # named "d"
+--   , vg # named "vg"
+--   ]
+--   # connectOutside' aOpts "pl" "d"
+--   # connectOutside' aOpts "vg" "d"
+--   # centerXY
+--   # frame 1
 
-aOpts = with & gap .~ Global 0.2
+-- aOpts = with & gap .~ Global 0.2
 
 mkColor c = roundedRect 1 1 0.1 # lw none # fc c
 
