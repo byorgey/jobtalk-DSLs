@@ -208,10 +208,19 @@
 %% XXX Need to decide exactly what to say here.
 
 %% Now, one thing you might be wondering is, how did *I* make these
-%%   images??  In fact, I have a great solution to this problem: a
-%%   *domain-specific language* for creating vector graphics.  XXX
-%%   finish.
-
+%%   images??  (It took me about 10 minutes to make all of these
+%%   diagrams!) I used a domain-specific language called 'diagrams'
+%%   which I have been developing for the past 6.5 years.  It's fully
+%%   open-source and at this point has a team of 5 contributors
+%%   working on it.
+%%
+%% So I'm super excited about diagrams, it's really powerful and fun
+%%   to use, and I'll show it to you later in the talk.  But I don't
+%%   just want to talk to you about diagrams per se.  At a high level,
+%%   the question I want to ask is: how can programming language
+%%   design contribute to software design?  A lot of my examples today
+%%   have to do with vector graphics, but the lessons apply more
+%%   broadly.
 
 \begin{xframe}{Outline}
   \begin{itemize}
@@ -227,21 +236,22 @@
 
 \begin{xframe}{Paradigms for problem solving}
   \begin{itemize}
-  \item Software tools 
+  \item<+-> Software tools 
     \includegraphics[height=0.25in]{illustrator_logo}
     \includegraphics[height=0.25in]{inkscape_logo}
     \includegraphics[height=0.25in]{photoshop_logo}
     \includegraphics[height=0.25in]{GIMP_logo}
-  \item General-purpose languages
+  \item<+-> General-purpose languages
     \includegraphics[height=0.25in]{Java-logo-big}
     \includegraphics[height=0.25in]{Cpp-logo}
     \includegraphics[height=0.25in]{racket-logo}
-  \item Domain-specific languages
+  \item<+-> Domain-specific languages
     \includegraphics[height=0.25in]{Asymptote-logo}
     \includegraphics[height=0.15in]{MPlogo}
     \includegraphics[height=0.25in]{postscript-logo}
     \includegraphics[height=0.25in]{tikz-logo}
-  \item Embedded domain-specific languages
+    %% Other examples: TeX, processing
+  \item<+-> Embedded domain-specific languages
     \begin{diagram}[width=15]
       import Diagrams.Example.Logo
       dia = ico_d
@@ -320,7 +330,7 @@
       & ability to tweak and modify
     \end{tabular} \bigskip
 
-    \includegraphics[width=1.5in]{excel-graph}
+    \includegraphics[width=2in]{excel-graph}
   \end{center}
 \end{xframe}
 
@@ -838,6 +848,11 @@ cat foo.txt | grep 'walrus' | sort | uniq
 \begin{xframe}{}
   \begin{center}
     \Huge{Demo!}
+    \begin{diagram}[height=100]
+      import Hypothetical
+
+      dia = perms4
+    \end{diagram}
   \end{center}
 \end{xframe}
 
@@ -1078,16 +1093,27 @@ cat foo.txt | grep 'walrus' | sort | uniq
 %% Things to say on this slide:
 %%
 %% 1. Note structure of code reflects structure of solution.
-%% 2. Code you see is built from simpler pieces.  Never too messy.
-%% 3. ???
+%% 2. Code you see will always be relatively simple.
+%% 3. You only see code related to the things you have just been
+%%    doing.  You have a lot of context for understanding it and lots
+%%    of examples at your fingertips.
 
-%% XXX Need to decide how to end.  Decide exactly what to say.
+%% Again, I think this same idea can apply more broadly in other
+%% domains --- designing DSLs and interfaces in tandem.  I think it's
+%% still 5-10 years out. But I think building these sorts of tools has
+%% the potential to dramatically change the way we use computers both
+%% for creative endeavors and for problem-solving.
 
 \begin{xframe}{}
   \begin{center}
     {\large Thank you!} \bigskip
 
-    Questions?
+    \begin{diagram}[width=30]
+      import Diagrams.Example.Logo
+      dia = ico_d
+    \end{diagram}
+
+    \url{http://projects.haskell.org/diagrams}
   \end{center}
 \end{xframe}
 
