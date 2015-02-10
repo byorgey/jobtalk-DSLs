@@ -12,16 +12,15 @@ colors = [red, green, blue, orange]
 drawDot :: Int -> Dia
 drawDot i = circle 1 # lw none # fc (colors !! i) # named i
 
-drawList :: [Int] -> Dia
-drawList is = vsep 0.5 (map drawDot is)
--- drawList = vsep 0.5 . map drawDot
+drawDots :: [Int] -> Dia
+drawDots is = vsep 0.5 (map drawDot is)
 
 drawPerm :: [Int] -> [Int] -> Dia
 drawPerm is js =
-  (("a" |> drawList is) ||| strutX 4 ||| ("b" |> drawList js))
-  # applyAll [ connect' (connectStyle i) ("a" .> i) ("b" .> i) | i <- [0 .. length is - 1] ]
+  (("a" |> drawDots is) ||| strutX 4 ||| ("b" |> drawDots js))
+  # applyAll [ connect' (arrowOpts i) ("a" .> i) ("b" .> i) | i <- [0..length is - 1]]
 
-connectStyle i = with & arrowHead .~ noHead & shaftStyle %~ lc (colors !! i)
+arrowOpts i = with & arrowHead .~ noHead & shaftStyle %~ (lc (colors !! i) . lw thick)
 
 drawAllPerms =
     vsep 2
@@ -31,4 +30,4 @@ drawAllPerms =
   . permutations
   $ [0..3]
 
-main = defaultMain (drawAllPerms)
+main = defaultMain (drawAllPerms # frame 0.5)
