@@ -3,7 +3,7 @@
 module Icons where
 
 import           Control.Arrow                  (second)
-import           Control.Lens hiding ((#), none)
+import           Control.Lens                   hiding (none, ( # ))
 import           Data.List                      (transpose)
 import           Data.List.Split
 import qualified Data.Map                       as M
@@ -125,9 +125,9 @@ testDia = -- hsep 0.5 . map (centerXY . sized (mkSizeSpec (Just 1 ^& Nothing))) 
 theTable =
   [ [label "" , label "Tools" , label "GP Langs" , label "DSLs" , label "EDSLs" ]
   , [power           , happy , sad   , happy , happy ]
-  , [flexibility     , meh   , happy , happy , happy ]
+  , [flexibility     , meh   , happy , meh , happy ]
   , [learning        , happy , sad   , meh   , meh   ]
-  , [programmability , sad   , happy , meh   , happy ] 
+  , [programmability , sad   , happy , meh   , happy ]
   ]
   where
     label s = text s # fontSizeL 0.6 # fc black <> rect 2 1 # lw none # fc white

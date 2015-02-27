@@ -1,11 +1,13 @@
-%% -*- mode: LaTeX; compile-command: "mk" -*-
+%% -*- mode: LaTeX; compile-command: "runhaskell Shake" -*-
 \documentclass[xcolor=svgnames,12pt]{beamer}
+\usepackage{etex}
 
 %\usepackage{haskell}
 %% %%include lhs2TeX-extra.fmt
 
 %include polycode.fmt
 
+\usepackage[all]{xy}
 \usepackage{brent}
 \usepackage[backend=cairo,outputdir=diagrams]{diagrams-latex}
 \usepackage[export]{adjustbox}
@@ -15,8 +17,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\theschool}{Grinnell College}
-\newcommand{\thedate}{February 9, 2015}
+\newcommand{\theschool}{Hendrix College}
+\newcommand{\thedate}{February 27, 2015}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,7 +143,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Introduction 
+%% Introduction
 
 %% Thanks very much for the introduction, thanks for
 %% having me here.  I want to start with a challenge.
@@ -236,7 +238,7 @@
 
 \begin{xframe}{Paradigms for problem solving}
   \begin{itemize}
-  \item<+-> Software tools 
+  \item<+-> Software tools
     \includegraphics[height=0.25in]{illustrator_logo}
     \includegraphics[height=0.25in]{inkscape_logo}
     \includegraphics[height=0.25in]{photoshop_logo}
@@ -345,7 +347,7 @@
       & how hard is it to get started?
     \end{tabular} \bigskip
 
-    % XXX TODO need image to illustrate "learning curve"
+    \includegraphics[width=2in]{getting-started}
   \end{center}
 \end{xframe}
 
@@ -372,7 +374,7 @@
         import Control.Lens (ix, foldOf)
         dia = foldOf (ix "programmability") criteria # frame 0.5
       \end{diagram}
-      & do tedious things easily
+      & include arbitrary computation
     \end{tabular} \bigskip
 
     \begin{diagram}[height=100]
@@ -629,7 +631,8 @@ Better:
 
 \begin{center}
 \begin{spec}
-(circle 5 # translateX 3 # fc blue) <>
+(circle 5 # translateX 3 # fc blue)
+`atop`
 (circle 5 # fc red)
 \end{spec}
 \end{center}
@@ -697,7 +700,9 @@ dia = d # lw thin # frame 0.5
   %% parts you don't have to think about their implementations
   %% anymore.  This is just good old abstraction.  There should also
   %% be elegant ways to combine the meanings.
-
+  \onslide<4->
+  \[ \xymatrix{ X \ar[r] \ar[d] & X+Y \ar[d] & Y \ar[l] \ar[d] \\ m_X \ar[r] & m_{X+Y} &
+    m_Y \ar[l] } \]
 \end{xframe}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -763,7 +768,8 @@ cat foo.txt | grep 'walrus' | sort | uniq
     \end{diagram}
 
     \begin{spec}
-      (circle 5 # translateX 3 # fc blue) <>
+      (circle 5 # translateX 3 # fc blue)
+      `atop`
       (circle 5 # fc red)
     \end{spec}
   \end{center}
@@ -774,13 +780,13 @@ cat foo.txt | grep 'walrus' | sort | uniq
 %% This is a matter of opinion: the best, most elegant and intuitive
 %% DSLs are based on sound mathematical theory.
 %%
-%% Examples: 
+%% Examples:
 %%
 %% Diagrams: theory of monoids. Affine spaces.
 %% Animations based on 2-categories.
 
 \begin{xframe}{Mathematical foundations}
-  \onslide<2-> 
+  \onslide<2->
   \begin{center}
     \emph{The best (domain-specific) languages are those designed with
     elegant mathematical semantics.}
@@ -841,13 +847,41 @@ cat foo.txt | grep 'walrus' | sort | uniq
   \end{center}
 \end{xframe}
 
+\begin{xframe}{Affine spaces}
+  \begin{center}
+    \begin{diagram}[width=200]
+dia = vsep 1 (map centerX [ptVec, dirAng, pt])
+
+ptVec = hcat [ circle 0.1 # fc black, strutX 3, arrowV (4 ^& 3) # centerY # scale (3/4) ]
+
+dirAng = hcat [ arrowV (4 ^& 3) # scale (3/4), strutX 3, ang # rotateBy (1/18)]
+  where
+    ang = mconcat
+      [ arrowV' (with & arrowHead .~ noHead) unitX # scale 3
+      , arrowV' (with & arrowHead .~ noHead) (normalize $ 4 ^& 3) # scale 3
+      , arc xDir (angleBetween unitX (4 ^& 3 :: V2 Double))
+      ]
+
+endpt = circle 0.1 # fc black
+
+pt = hcat [ strokeTrail theTrail <> endpt <> endpt # translate (trailOffset theTrail)
+          , strutX 3
+          , arrowV' (with & arrowShaft .~ theTrail) (trailOffset theTrail)
+          ]
+  where
+    theTrail = fromOffsets [1 ^& 1, 2 ^& (-0.5), 1 ^& 1]
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{xframe}{}
   \begin{center}
-    \Huge{Demo!}
+    \Huge{Demo!} \bigskip
+
     \begin{diagram}[height=100]
       import Hypothetical
 
@@ -895,7 +929,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
       import GUI
       dia = menuBar === guiFrame (theCode # font "Courier" # scale 0.07) theDia
 
-      theDia = 
+      theDia =
         mconcat
         [ circle 1 # fc blue
         , mouseCursor # moveTo (3 ^& (-2))
@@ -906,7 +940,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
       theCode = text . unlines $
         [ "mconcat"
         , "  [ circle 1 # fc blue"
-        , "  , circle 1.5 # fc green" 
+        , "  , circle 1.5 # fc green"
         , "      # translate (3 ^& (-2))"
         , "  , triangle 1 # fc yellow"
         , "      # translate (1 ^& (-5))"
@@ -923,7 +957,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
       import GUI
       dia = menuBar === guiFrame (theCode # fontSizeL 0.07 # font "Courier") theDia
 
-      theDia = 
+      theDia =
         mconcat
         [ circle 1 # fc blue
         , mouseCursor # moveTo newPos
@@ -937,7 +971,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
       theCode = text . unlines $
         [ "mconcat"
         , "  [ circle 1 # fc blue"
-        , "  , circle 1.5 # fc green" 
+        , "  , circle 1.5 # fc green"
         , "      # translate (2 ^& (-1))"
         , "  , triangle 1 # fc yellow"
         , "      # translate (1 ^& (-5))"
@@ -951,7 +985,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
   \begin{center}
     \begin{diagram}[width=250]
       import GUI
-      
+
       dia =
         menuBar === circle 1 # frame 0.5 # lc red # lw thick # enframe' 4 3
     \end{diagram}
@@ -962,7 +996,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
   \begin{center}
     \begin{diagram}[width=250]
       import GUI
-      
+
       dia = mconcat
         [ mouseCursor # scale 0.35 # moveTo ((-0.1) ^& (-1.2))
         , wiggleMenu
@@ -979,10 +1013,10 @@ cat foo.txt | grep 'walrus' | sort | uniq
   \begin{center}
     \begin{diagram}[width=250]
       import GUI
-      
+
       dia = mconcat
         [ mouseCursor # scale 0.35 # moveTo ((-0.1) ^& (-1.2))
-        , menuBar === circle 1 # wiggly 30 0.03 # strokeTrail # frame 0.5 # lc red # lw thick # enframe' 4 3 
+        , menuBar === circle 1 # wiggly 30 0.03 # strokeTrail # frame 0.5 # lc red # lw thick # enframe' 4 3
         ]
     \end{diagram}
   \end{center}
@@ -997,13 +1031,13 @@ cat foo.txt | grep 'walrus' | sort | uniq
       import Data.Tree
       import Diagrams.TwoD.Layout.Tree hiding (leaf)
 
-      dia = 
-        menuBar 
-        === 
+      dia =
+        menuBar
+        ===
         (treeView |||||| diaView) # centerX
 
       treeView = theTree # frame 20 # enframe
-      diaView  = circle 1 # wiggly 30 0.03 # strokeTrail 
+      diaView  = circle 1 # wiggly 30 0.03 # strokeTrail
                           # frame 0.5 # lc red # lw thick # enframe
 
       c = ("circle 1", mempty)
@@ -1043,9 +1077,9 @@ cat foo.txt | grep 'walrus' | sort | uniq
       import Data.Tree
       import Diagrams.TwoD.Layout.Tree hiding (leaf)
 
-      dia = 
-        menuBar 
-        === 
+      dia =
+        menuBar
+        ===
         ((treeView |||||| diaView) # centerX === codeView)
 
       treeView = theTree # frame 10 # enframe' 2 1.5
@@ -1059,7 +1093,7 @@ cat foo.txt | grep 'walrus' | sort | uniq
         , "  $ [0, 0.01 .. 1]"
         ]
 
-      diaView  = circle 1 # wiggly 30 0.03 # strokeTrail 
+      diaView  = circle 1 # wiggly 30 0.03 # strokeTrail
                           # frame 0.5 # lc red # lw thick # enframe' 2 1.5
 
       c = ("circle 1", mempty)
